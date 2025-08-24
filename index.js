@@ -1,4 +1,5 @@
 let imagemAtualNumero = 0;
+let temaAtual = 2;
 let tarefaInputElemento = document.getElementById('tarefainput');
 let valorInicial = document.getElementById('valorInicial');
 let valorFinal = document.getElementById('valorFinal');
@@ -103,4 +104,25 @@ function imagemAnterior() {
     imagemAtualNumero--;
     imagemAtual.src = `imgs/img${imagemAtualNumero}.jpg`;
 }
+}
+
+function mudarTema() {
+    if (temaAtual == 2){
+        temaAtual--;
+       let iconAtual = document.getElementById('tema');
+       iconAtual.src = "imgs/cor1.png";
+        document.documentElement.style.setProperty('--cor-primaria', '#ffffffff');
+        document.documentElement.style.setProperty('--cor-secundaria', '#fed635ff');
+        document.documentElement.style.setProperty('--cor-terciaria', '#000000ff');
+        document.documentElement.style.setProperty('--cor-quaternaria', '#0b3b82ff');
+
+    } else{
+        temaAtual++;
+        document.getElementById('tema').src = "imgs/cor2.png";
+        document.documentElement.style.setProperty('--cor-primaria', '#2a2a2a');
+        document.documentElement.style.setProperty('--cor-secundaria', '#4b4b4b');    
+        document.documentElement.style.setProperty('--cor-terciaria', '#f5f5f5');
+        document.documentElement.style.setProperty('--cor-quaternaria', '#000000');
+    }
+    
 }

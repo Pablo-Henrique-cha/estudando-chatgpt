@@ -17,6 +17,7 @@
         </div>
         <div class="titulo_navegaçao">
             <a href="index.html">Home</a>
+            <img id="tema" src="imgs/cor2.png" onclick="mudarTema()" alt="modo claro">
         </div>
     </header>
     <div class="exercicios">
@@ -50,7 +51,7 @@
             <button type="button" onclick="proximaImagem()">Proxima imagem →</button>                
         </div>
         <h2>Comversor de moeda</h2>
-        <div>
+        <div class="imputsmoedas">
             <input type="number" id="valorInicial" value="1">
             <select id="moedaInicial"  > 
                 <option value="BRL">Real Brasileiro (BRL)</option>
@@ -60,7 +61,7 @@
                 <option value="MZN">Metical Moçambicano (MZN)</option>
             </select>
         </div>   
-        <div> 
+        <div class="imputsmoedas"> 
             <input type="number" id="valorFinal" value="0.18">       
             <select id="moedaFinal"  > 
                 <option value="USD">Dólar Americano (USD)</option>

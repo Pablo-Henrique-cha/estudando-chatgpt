@@ -4,11 +4,19 @@
     box-sizing: border-box;
  }
 
+:root {
+    --cor-primaria: #2a2a2a;
+    --cor-secundaria:#4b4b4b;
+    --cor-terciaria: #f5f5f5;
+    --cor-quaternaria: #000000;
+}
+
 body {
     display: flex;
     flex-direction: column;
     gap: 50px;
-    background-color: #fff9e9 ;
+    background-color: var(--cor-primaria);
+    color: var(--cor-terciaria);
 }
 
 
@@ -35,38 +43,83 @@ img {
 
 
 button {
-    background-color:  #A29881;
+    background-color:  var(--cor-secundaria);
     border-radius: 15px;
     padding: 1%;
+    color: var(--cor-terciaria);
     
 }
 
+button:hover {
+    cursor: pointer;
+    border-color:var(--cor-terciaria);
+}
+
 header {
-    background-color: #daceb5;
+    background-color: var(--cor-quaternaria);
+    display: flex;
+    flex-direction: column;
 }
 
 .titulo {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin: 10px 10px 3px 10px;
-    height: 100px;
+    height: 50%;
     align-items: center;
 }
 
 .titulo_navegaçao {
     display: flex;
     justify-content: space-between;
-    background-color: #ede2cb;
+    background-color: var(--cor-quaternaria);
     
+}
+
+.titulo_navegaçao img {
+    width: 7%;
+    height: 7%;
+    margin: 0.5% 15% 0 0;
+    cursor: pointer;
 }
 
 a {
     margin: 0.5%;
-    border-radius: 15px;
     padding: 1%;
-    color: black;
+    color: var(--cor-terciaria);
     text-decoration: none;
-    background-color: #A29881;
-    margin-left: 10px;
+    margin-left: 15%;
 }
 
+a:hover {
+    border: 1px solid var(--cor-terciaria);
+    border-radius: 15px;
+}
+
+.imputsmoedas {
+    border: 2px solid var(--cor-secundaria);
+    padding: 0.2%;
+    border-radius: 15px;
+    overflow: hidden;
+    
+}
+
+.imputsmoedas input, .imputsmoedas select {
+    border: none;
+    border-left: 1px solid var(--cor-secundaria);
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+select:hover {
+    cursor: pointer;
+    border: 2px solid var(--cor-terciaria);
+}
+
+input:hover {
+    border: 2px solid var(--cor-terciaria);
+}
