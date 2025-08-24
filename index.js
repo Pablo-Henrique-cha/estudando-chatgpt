@@ -51,30 +51,46 @@ function corAletoria() {
     return '#' + cor.padStart(6, 0);
 }
 
-function teste() {
-    document.body.style.backgroundColor = corAletoria();
+function alterandoCor() {
+    document.documentElement.style.setProperty('--cor-primaria', corAletoria());
+    document.documentElement.style.setProperty('--cor-secundaria', corAletoria());
+    salvandoElementos();
+}
+
+if (localStorage.getItem('contador')) {
+    document.getElementById('Contador').innerText = localStorage.getItem('contador');
 }
 
 function adicionar() {
     let contador = document.getElementById('Contador');
     contador.innerText = parseInt(contador.innerText) + 1;
+    salvandoElementos();
 }
 
 function remover() {
     let contador = document.getElementById('Contador');
     contador.innerText = parseInt(contador.innerText) - 1;
+    salvandoElementos();
 }
+
+if (localStorage.getItem('tarefas')) {
+    document.getElementById('listatarefas').innerHTML = localStorage.getItem('tarefas');
+} else {
+    document.getElementById('verificador').innerText = 'Sem tarefas no momento!';
+}
+
 
 function adicionarTarefa() {
     let tarefaInput = document.getElementById('tarefainput').value.trim();
     let tarefaInputElemento = document.getElementById('tarefainput');
-    let listaTarefas = document.getElementById('verificador');
+    let verificador = document.getElementById('verificador');
+    let listaTarefas = document.getElementById('listatarefas');
     if (tarefaInput === '') {
         tarefaInputElemento.placeholder = "Por favor, Digite uma nova terefa!'";
         tarefaInputElemento.style.width = '225px';
         return;
-    } else if (listaTarefas.textContent == 'Sem tarefas no momento!') {
-        listaTarefas.textContent = tarefaInput;
+    } else if (verificador.textContent == 'Sem tarefas no momento!') {
+        verificador.textContent = tarefaInput;
         tarefaInputElemento.value = '';
     }  else {
         let novaTarefa = document.createElement('li');
@@ -82,6 +98,21 @@ function adicionarTarefa() {
         listaTarefas.appendChild(novaTarefa);
         tarefaInputElemento.value = '';
     }
+    salvandoElementos();
+}
+
+function removerTarefas() {
+    let listaTarefas = document.getElementById('listatarefas');
+    if (listaTarefas.children.length >1) {
+        listaTarefas.lastElementChild.remove();
+    } else{
+        listaTarefas.innerHTML = '<li id="verificador">Sem tarefas no momento!</li>';
+    }
+    salvandoElementos();
+}
+
+if (localStorage.getItem('imagemAtual')) {
+    document.getElementById('imagem').src = localStorage.getItem('imagemAtual');
 }
 
 function proximaImagem() {
@@ -93,6 +124,7 @@ function proximaImagem() {
     imagemAtualNumero++;
     imagemAtual.src = `imgs/img${imagemAtualNumero}.jpg`;
 }
+ salvandoElementos();
 }
 
 function imagemAnterior() {
@@ -104,6 +136,7 @@ function imagemAnterior() {
     imagemAtualNumero--;
     imagemAtual.src = `imgs/img${imagemAtualNumero}.jpg`;
 }
+    salvandoElementos();
 }
 
 if (localStorage.getItem('temaAtual')) {
@@ -132,6 +165,13 @@ function mudarTema() {
         document.documentElement.style.setProperty('--cor-terciaria', '#f5f5f5');
         document.documentElement.style.setProperty('--cor-quaternaria', '#000000');
     }
+    salvandoElementos();
+}
+
+function salvandoElementos() {
+    localStorage.setItem('contador', document.getElementById('Contador').innerText);
+    localStorage.setItem('tarefas', document.getElementById('listatarefas').innerHTML);
+    localStorage.setItem('imagemAtual', document.getElementById('imagem').src);
     localStorage.setItem('temaAtual', temaAtual);
     localStorage.setItem('iconAtual', document.getElementById('tema').src);
     localStorage.setItem('corPrimaria', getComputedStyle(document.documentElement).getPropertyValue('--cor-primaria'));
