@@ -1,5 +1,5 @@
 let imagemAtualNumero = 0;
-let temaAtual = 2;
+let temaAtual = localStorage.getItem('temaAtual') ? parseInt(localStorage.getItem('temaAtual')) : 2;
 let tarefaInputElemento = document.getElementById('tarefainput');
 let valorInicial = document.getElementById('valorInicial');
 let valorFinal = document.getElementById('valorFinal');
@@ -106,10 +106,18 @@ function imagemAnterior() {
 }
 }
 
+if (localStorage.getItem('temaAtual')) {
+    document.getElementById('tema').src = localStorage.getItem('iconAtual');
+    document.documentElement.style.setProperty('--cor-primaria', localStorage.getItem('corPrimaria'));
+    document.documentElement.style.setProperty('--cor-secundaria', localStorage.getItem('corSecundaria'));
+    document.documentElement.style.setProperty('--cor-terciaria', localStorage.getItem('corTerciaria'));
+    document.documentElement.style.setProperty('--cor-quaternaria', localStorage.getItem('corQuaternaria'));
+}
+
 function mudarTema() {
+    let iconAtual = document.getElementById('tema');
     if (temaAtual == 2){
         temaAtual--;
-       let iconAtual = document.getElementById('tema');
        iconAtual.src = "imgs/cor1.png";
         document.documentElement.style.setProperty('--cor-primaria', '#ffffffff');
         document.documentElement.style.setProperty('--cor-secundaria', '#fed635ff');
@@ -118,11 +126,16 @@ function mudarTema() {
 
     } else{
         temaAtual++;
-        document.getElementById('tema').src = "imgs/cor2.png";
+        iconAtual.src = "imgs/cor2.png";
         document.documentElement.style.setProperty('--cor-primaria', '#2a2a2a');
         document.documentElement.style.setProperty('--cor-secundaria', '#4b4b4b');    
         document.documentElement.style.setProperty('--cor-terciaria', '#f5f5f5');
         document.documentElement.style.setProperty('--cor-quaternaria', '#000000');
     }
-    
+    localStorage.setItem('temaAtual', temaAtual);
+    localStorage.setItem('iconAtual', document.getElementById('tema').src);
+    localStorage.setItem('corPrimaria', getComputedStyle(document.documentElement).getPropertyValue('--cor-primaria'));
+    localStorage.setItem('corSecundaria', getComputedStyle(document.documentElement).getPropertyValue('--cor-secundaria'));
+    localStorage.setItem('corTerciaria', getComputedStyle(document.documentElement).getPropertyValue('--cor-terciaria'));
+    localStorage.setItem('corQuaternaria', getComputedStyle(document.documentElement).getPropertyValue('--cor-quaternaria'));
 }
