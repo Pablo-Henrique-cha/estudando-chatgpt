@@ -6,6 +6,8 @@ let valorFinal = document.getElementById('valorFinal');
 let moedaInicial = document.getElementById('moedaInicial').value;
 let moedaFinal = document.getElementById('moedaFinal').value;
 let valorConvertido = '';
+let numeroPergunta = 1;
+let pontos = 0;
 let cotacao = {
 
     //Real              //dolar             //Euro               //Iene               //Metical
@@ -16,6 +18,21 @@ let cotacao = {
     'BRLBRL' : 1,       'USDUSD' : 1,       'EUREUR' : 1,        'JPYJPY' : 1,        'MZNMZN' : 1,
 
 };
+let perguntas = {
+    2 : 'Em que ano o Brasil foi descoberto pelos portugueses?',
+    3: 'Quem escreveu “Dom Casmurro”?',
+    4: 'Qual é o maior oceano do mundo?',
+    5: 'Qual é a capital do Japão?' 
+}
+let respostas = {
+    2 : ['1500', '1600', '1700', '1400'],
+    3 : ['Machado de Assis', 'José de Alencar', 'Carlos Drummond de Andrade', 'Cecília Meireles'],
+    4 : ['Oceano Atlântico', 'Oceano Pacífico', 'Oceano Índico', 'Oceano Ártico'],
+    5 : ['Pequim', 'Seul','Tóquio', 'Bangkok']
+}
+let respostaCerta = {
+    1 : 'c', 2: 'a', 3: 'a', 4 : 'b' , 5: 'c'
+}
    
 tarefaInputElemento.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
@@ -166,6 +183,19 @@ function mudarTema() {
         document.documentElement.style.setProperty('--cor-quaternaria', '#000000');
     }
     salvandoElementos();
+}
+
+function perguntas() {
+    let comecar = document.getElementById('botaoPerguntas');
+    comecar.remove();
+    document.getElementById('perguntasResposta').style.display = 'flex';
+}
+
+function respostas(tag) {
+    if (tag === respostaCerta[numeroPergunta]) {
+        pontos++;
+    };
+    alert('teste');
 }
 
 function salvandoElementos() {

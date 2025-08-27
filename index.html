@@ -71,11 +71,22 @@
                 <option value="MZN">Metical Moçambicano (MZN)</option>
                 <option value="BRL">Real Brasileiro (BRL)</option>
             </select>
-        </div>    
+        </div>
+        <div class="exercicios">    
+            <h2>Perguntas e respostas</h2>
+            <button id="botaoPerguntas" type="button" onclick="perguntas()">Começar</button>
+            <div id="perguntasResposta" class="conteinerPerguntasRespostas">
+                <h2>Qual é o planeta mais próximo do Sol?</h2>
+                <div class="conteinerRespostas">
+                    <a id="(a)" class="Resposta" onclick="respostas('a')"> Vênus</a>
+                    <a id="(b)" class="Resposta" onclick="respostas('b')"> Terra</a>
+                    <a id="(c)" class="Resposta" onclick="respostas('c')"> Mercúrio</a>
+                    <a id="(d)" class="Resposta" onclick="respostas('d')"> Marte</a>
+                </div>
+            </div>
+
+        </div>
     </div>    
-
-
-
- <script src="index.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>
