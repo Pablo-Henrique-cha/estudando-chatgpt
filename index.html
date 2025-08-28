@@ -26,8 +26,9 @@
             <P>Exercicios</P>
             <p>___________________________________</p>
         </div>
-        <h2>Randomizando a cor da pagina</h2>    
-        <button type="button" onclick="alterandoCor()">Alterar cor da pagina</button>    
+        <h2>Randomizando a cor da pagina</h2>
+            <button type="button" onclick="alterandoCor()">Alterar cor da pagina</button>
+            <button style="display: none;" id="botaoCor" type="button" onclick="corPadrao()">Cor Padrão</button>    
         <div class="exercicio_Expecifico">
             <h2>Contador </h2>
             <p id="Contador" style="font-size: 150%;">0</p>
@@ -74,19 +75,20 @@
         </div>
         <div class="exercicios">    
             <h2>Perguntas e respostas</h2>
-            <button id="botaoPerguntas" type="button" onclick="perguntas()">Começar</button>
+            <button id="botaoPerguntas" type="button" onclick="conteinerPerguntas()">Começar</button>
+            <h2 id ="resultado" style="display: none;"></h2>
             <div id="perguntasResposta" class="conteinerPerguntasRespostas">
-                <h2>Qual é o planeta mais próximo do Sol?</h2>
+                <h2 id="PerguntaAtual">Qual é o planeta mais próximo do Sol?</h2>
                 <div class="conteinerRespostas">
-                    <a id="(a)" class="Resposta" onclick="respostas('a')"> Vênus</a>
-                    <a id="(b)" class="Resposta" onclick="respostas('b')"> Terra</a>
-                    <a id="(c)" class="Resposta" onclick="respostas('c')"> Mercúrio</a>
-                    <a id="(d)" class="Resposta" onclick="respostas('d')"> Marte</a>
+                    <a id="a" class="Resposta" onclick="respondendo('a')"> Vênus</a>
+                    <a id="b" class="Resposta" onclick="respondendo('b')"> Terra</a>
+                    <a id="c" class="Resposta" onclick="respondendo('c')"> Mercúrio</a>
+                    <a id="d" class="Resposta" onclick="respondendo('d')"> Marte</a>
                 </div>
             </div>
 
         </div>
-    </div>    
-    <script src="index.js"></script>
+    </div>  
+    <script src="index.js"></script>  
 </body>
 </html>

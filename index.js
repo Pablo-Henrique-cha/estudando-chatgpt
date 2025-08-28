@@ -8,7 +8,8 @@ let moedaFinal = document.getElementById('moedaFinal').value;
 let valorConvertido = '';
 let numeroPergunta = 1;
 let pontos = 0;
-let cotacao = {
+let cotacao = {};
+let cotacao2 = {
 
     //Real              //dolar             //Euro               //Iene               //Metical
     'BRLUSD' : 0.18,    'USDBRL' : 5.42,    'EURBRL' : 6.36,     'JPYBRL' : 0.037,    'MZNBRL' : 0.085,
@@ -68,9 +69,26 @@ function corAletoria() {
     return '#' + cor.padStart(6, 0);
 }
 
+if (localStorage.getItem('botaoPadrao')) {
+    document.getElementById('botaoCor').style.display = localStorage.getItem('botaoPadrao');
+}
+
 function alterandoCor() {
     document.documentElement.style.setProperty('--cor-primaria', corAletoria());
     document.documentElement.style.setProperty('--cor-secundaria', corAletoria());
+    document.getElementById('botaoCor').style.display = 'block';
+    salvandoElementos();
+}
+
+function corPadrao() {
+   if (temaAtual == 2){
+    document.documentElement.style.setProperty('--cor-primaria', '#2a2a2a');
+    document.documentElement.style.setProperty('--cor-secundaria', '#4b4b4b'); 
+   } else {
+    document.documentElement.style.setProperty('--cor-primaria', '#ffffffff');
+    document.documentElement.style.setProperty('--cor-secundaria', '#fed635ff');
+   }
+    document.getElementById('botaoCor').style.display = 'none';
     salvandoElementos();
 }
 
@@ -185,20 +203,49 @@ function mudarTema() {
     salvandoElementos();
 }
 
-function perguntas() {
+function conteinerPerguntas() {
     let comecar = document.getElementById('botaoPerguntas');
     comecar.remove();
     document.getElementById('perguntasResposta').style.display = 'flex';
 }
 
-function respostas(tag) {
+function respondendo(tag) {
+     let respostaDada = document.getElementById(tag);
     if (tag === respostaCerta[numeroPergunta]) {
         pontos++;
-    };
-    alert('teste');
+        respostaDada.style.borderColor = '#00ff08ff';
+    } else {
+        respostaDada.style.borderColor = '#ff0000ff';
+        document.getElementById(respostaCerta[numeroPergunta]).style.borderColor = '#00ff08ff';
+    }
+    setTimeout(() => {
+        respostaDada.style.borderColor = '';
+        document.getElementById(respostaCerta[numeroPergunta]).style.borderColor = '';
+        numeroPergunta++;
+        proximaPergunta();
+    }, 1000);
+}
+
+function proximaPergunta() {
+    if (numeroPergunta > Object.keys(perguntas).length) {
+        document.getElementById('perguntasResposta').style.display = 'none';
+        let resultado = document.getElementById('resultado');
+        resultado.style.display = 'flex';
+        resultado.innerHTML = `<h2>Você acertou ${pontos} de ${Object.keys(perguntas).length} perguntas!</h2>`;
+    } else {
+        let perguntaAmostra = document.getElementById('PerguntaAtual');
+        perguntaAmostra.innerText = perguntas[numeroPergunta];
+        document.getElementById('a').innerText = respostas[numeroPergunta][0];
+        document.getElementById('b').innerText = respostas[numeroPergunta][1];
+        document.getElementById('c').innerText = respostas[numeroPergunta][2];
+        document.getElementById('d').innerText = respostas[numeroPergunta][3];   
+
+    }
+
 }
 
 function salvandoElementos() {
+    localStorage.setItem('botaoPadrao', document.getElementById('botaoCor').style.display);
     localStorage.setItem('contador', document.getElementById('Contador').innerText);
     localStorage.setItem('tarefas', document.getElementById('listatarefas').innerHTML);
     localStorage.setItem('imagemAtual', document.getElementById('imagem').src);
