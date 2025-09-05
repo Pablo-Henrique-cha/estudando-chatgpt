@@ -8,8 +8,8 @@ let moedaFinal = document.getElementById('moedaFinal').value;
 let valorConvertido = '';
 let numeroPergunta = 1;
 let pontos = 0;
-let cotacao = {};
-let cotacao2 = {
+let usuarios = JSON.parse(localStorage.getItem('usuarios')) ? JSON.parse(localStorage.getItem('usuarios')) : {};
+let cotacao = {
 
     //Real              //dolar             //Euro               //Iene               //Metical
     'BRLUSD' : 0.18,    'USDBRL' : 5.42,    'EURBRL' : 6.36,     'JPYBRL' : 0.037,    'MZNBRL' : 0.085,
@@ -244,7 +244,108 @@ function proximaPergunta() {
 
 }
 
+document.getElementById('formulario').addEventListener("submit", function(event) {
+    event.preventDefault(); 
+
+    let dados = new FormData(this);
+    if (!ValidarFormulario()) {
+        return;
+    }
+
+    criarUsuario(dados); 
+});
+
+document.getElementById('acessar').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    let dados = new FormData(this);
+    if (!validarSenha(dados)) {
+        return;
+    } else {
+
+    let mostarInfo = document.createElement('p');
+    let conteinerInfo = document.getElementById('conteinerInfo');
+
+    mostarInfo.innerHTML = `Nome de exibição: ${dados.get('acessarNomeUsuario').trim()} <br>
+    Nome Completo: ${usuarios[dados.get('acessarNomeUsuario').trim()+ 'nome']} <br>
+    Email: ${usuarios[dados.get('acessarNomeUsuario').trim() + 'email']} <br>
+    Senha: ${usuarios[dados.get('acessarNomeUsuario').trim()]} <br>`;
+    conteinerInfo.appendChild(mostarInfo);
+    }
+});
+
+function criarUsuario(tag) {
+
+    usuarios[tag.get('nomeUsuario').trim()] = tag.get('senha').trim();
+    usuarios[tag.get('nomeUsuario').trim() + 'email'] = tag.get('email').trim();
+    usuarios[tag.get('nomeUsuario').trim() + 'nome'] = tag.get('nomeCompletoUsuario').trim();
+    alert('Usuario criado com sucesso!')
+    salvandoElementos();
+
+}
+
+function validarSenha() {
+    let nomeDigitado = document.getElementById('acessarNomeUsuario');
+    let senhaDigitada = document.getElementById('acessarSenha'); 
+
+    if (nomeDigitado.value.trim() in usuarios) {
+        if (senhaDigitada.value.trim() == usuarios[nomeDigitado.value.trim()]) {
+            senhaDigitada.style.borderColor = '';
+            nomeDigitado.style.borderColor = '';
+            nomeDigitado.value = '';
+            senhaDigitada.value = '';
+            return true;
+        } else {
+            senhaDigitada.style.borderColor = '#ff0000ff';
+            alert('Senha invalida!');
+            return false;
+        }
+    } else {
+        nomeDigitado.style.borderColor = '#ff0000ff';
+        alert('Usuario invalido!');
+        return false;
+    }
+}
+
+function ValidarFormulario() {
+    let senha = document.getElementById('senha');
+    let comfirmarSenha = document.getElementById('confirmarSenha');
+    let nomeUsuario = document.getElementById('nomeUsuario');
+    let nomeCompletoUsuario = document.getElementById('nomeCompletoUsuario');
+    let emailUsuario = document.getElementById('email');
+    let comfirmarEmail = document.getElementById('comfirmarEmail');
+
+    if (emailUsuario.value.trim() != comfirmarEmail.value.trim()) {
+        emailUsuario.style.borderColor = '#ff0000ff';
+        comfirmarEmail.style.borderColor = '#ff0000ff';
+        return false;
+    }
+    else if (nomeUsuario.value.trim() in usuarios) {
+        alert('Nome de usuario invalido');
+        nomeUsuario.borderColor = '#ff0000ff';
+        return false;
+    } else if (senha.value.trim() != comfirmarSenha.value.trim()) {
+            senha.style.borderColor = '#ff0000ff';
+            comfirmarSenha.style.borderColor = '#ff0000ff';
+            return false;
+    } else {
+            nomeUsuario.value = '';
+            emailUsuario.value ='';
+            senha.value = '';
+            comfirmarSenha.value = '';
+            comfirmarEmail.value = '';
+            nomeCompletoUsuario.value = '';
+            senha.style.borderColor = '';
+            comfirmarSenha.style.borderColor = '';
+            emailUsuario.style.borderColor = '';
+            comfirmarEmail.style.borderColor = '';
+       return true;
+    }
+}
+
+
 function salvandoElementos() {
+    localStorage.setItem('usuarios', JSON.stringify(usuarios));
     localStorage.setItem('botaoPadrao', document.getElementById('botaoCor').style.display);
     localStorage.setItem('contador', document.getElementById('Contador').innerText);
     localStorage.setItem('tarefas', document.getElementById('listatarefas').innerHTML);

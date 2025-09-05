@@ -88,6 +88,47 @@
             </div>
 
         </div>
+        <div>
+            <h2>Validando formulario</h2>
+            <p>Formulario para criação de conta</p>
+        </div> 
+        <div id="conteinerFormulario" class="Exercicios">
+               <form method="post" id="formulario" class="formulario" autocomplete="on" >
+                <div>
+                    <label for="nomeUsuario">Nome de exibição:</label>
+                    <input placeholder="Digite um nome de exibição" type="text" minlength="6" id="nomeUsuario" name="nomeUsuario" required autocomplete="nickname">
+                    <label for="nomeCompletoUsuario">Nome completo:</label>
+                    <input placeholder="Digite o seu nome completo" type="text" id="nomeCompletoUsuario" name="nomeCompletoUsuario" required autocomplete="name">
+                </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input placeholder="Digite um email" type="email" pattern=".+\.com" id="email" name="email" required autocomplete="email">
+                    <label for="comfirmarEmail">Comfirmar email:</label>
+                    <input placeholder="Digite o email novamente" type="email" pattern=".+\.com" id="comfirmarEmail" name="comfirmarEmail" required autocomplete="email">
+                </div>
+                <div>
+                    <label for="senha">Senha:</label>
+                    <input placeholder="Digite uma senha" type="password" minlength="6" id="senha" name="senha" required autocomplete="new-password">
+                    <label for="confirmarSenha">Confirmar Senha:</label>
+                    <input placeholder="Confirme a senha" type="password" minlength="6" id="confirmarSenha" name="confirmarSenha" required autocomplete="new-password">
+                </div>
+                <button type="submit" >Criar Conta</button>
+               </form>
+        </div>  
+        <h1>Acessar usuario</h1> 
+        <div class="conteinerFormulario" id="conteinerInfo">
+            <form class="formulario" id="acessar" method="post" autocomplete="on">
+                <div>
+                    <label for="acessarNomeUsuario">Nome do Usuario:</label>
+                    <input placeholder="Digite o nome do usuario" id="acessarNomeUsuario" name="acessarNomeUsuario" required autocomplete="username">
+                    <label for="acessarSenha">Senha:</label>
+                    <input placeholder="Digite a senha" id="acessarSenha" name="acessarSenha" type="password" required autocomplete="current-password">
+                </div>
+                <div>
+                    <button type="submit">Acessar</button>
+                </div>
+            </form>
+        </div> 
     </div>  
     <script src="index.js"></script>  
 </body>
