@@ -9,6 +9,8 @@ let valorConvertido = '';
 let numeroPergunta = 1;
 let pontos = 0;
 let usuarios = JSON.parse(localStorage.getItem('usuarios')) ? JSON.parse(localStorage.getItem('usuarios')) : {};
+let ligado = false;
+let jogadorAtualJogoDaVelha = 'X';
 let cotacao = {
 
     //Real              //dolar             //Euro               //Iene               //Metical
@@ -343,6 +345,110 @@ function ValidarFormulario() {
     }
 }
 
+function comecarConometro() {
+    let cronometroSegundo = document.getElementById('cronometroSegundo');
+    let cronometroMinuto = document.getElementById('cronometroMinuto');
+    let cronometroHora = document.getElementById('cronometroHora');
+    ligado = !ligado
+
+    
+    //for (ligado == true) {
+
+      //  setTimeout (() => {
+        //   return cronometroSegundo.textContent = parseInt(cronometroSegundo.textContent) +1;
+       // }, 1000 );
+   // }
+    
+
+}
+
+function marcarJogoDaVelha(elementoClicado) {
+
+    if (jogadorAtualJogoDaVelha == 'X'){
+        elementoClicado.style.color = '#fc3f3f';
+    } else {
+        elementoClicado.style.color = '#3f78fcff';
+    }
+
+    if (elementoClicado.textContent != ''){
+        alert('Casa já selecionada!');
+    } else {
+        elementoClicado.textContent = jogadorAtualJogoDaVelha;
+        alterandoJogadorJogoDaVelha();
+    }
+
+    verificarGanhadorJogoDaVelha();
+}
+
+function alterandoJogadorJogoDaVelha() {
+
+    let jogadorAtualExibicao = document.getElementById('jogadorAtualExibicao');
+
+    if (jogadorAtualJogoDaVelha == 'X'){
+        jogadorAtualJogoDaVelha = 'O';
+        jogadorAtualExibicao.textContent = jogadorAtualJogoDaVelha;
+        jogadorAtualExibicao.style.color = '#3f78fcff';
+    } else {
+        jogadorAtualJogoDaVelha = 'X';
+        jogadorAtualExibicao.textContent = jogadorAtualJogoDaVelha;
+        jogadorAtualExibicao.style.color = '#fc3f3f';
+    }
+}
+
+function verificarGanhadorJogoDaVelha() {
+    let caixa1 = document.getElementById('jogoDaVelhaN1').textContent;
+    let caixa2 = document.getElementById('jogoDaVelhaN2').textContent;
+    let caixa3 = document.getElementById('jogoDaVelhaN3').textContent;
+    let caixa4 = document.getElementById('jogoDaVelhaN4').textContent;
+    let caixa5 = document.getElementById('jogoDaVelhaN5').textContent;
+    let caixa6 = document.getElementById('jogoDaVelhaN6').textContent;
+    let caixa7 = document.getElementById('jogoDaVelhaN7').textContent;
+    let caixa8 = document.getElementById('jogoDaVelhaN8').textContent;
+    let caixa9 = document.getElementById('jogoDaVelhaN9').textContent;
+
+    if (caixa1 == caixa2 && caixa2 == caixa3 && caixa1 != ''){
+        alert('O jogador ' + caixa1 + ' ganhou!');
+        setTimeout(() => {reiniciarJogoDaVelha();}, 1000);
+    } else if (caixa4 == caixa5 && caixa5 == caixa6 && caixa4 != ''){
+        alert('O jogador ' + caixa4 + ' ganhou!');
+        setTimeout(() => {reiniciarJogoDaVelha();}, 1000);
+    } else if (caixa7 == caixa8 && caixa8 == caixa9 && caixa7 != ''){
+        alert('O jogador ' + caixa7 + ' ganhou!');
+        setTimeout(() => {reiniciarJogoDaVelha();}, 1000);
+    } else if (caixa1 == caixa4 && caixa4 == caixa7 && caixa1 != ''){
+        alert('O jogador ' + caixa1 + ' ganhou!');
+        setTimeout(() => {reiniciarJogoDaVelha();}, 1000);
+    } else if (caixa2 == caixa5 && caixa5 == caixa8 && caixa2 != ''){
+        alert('O jogador ' + caixa2 + ' ganhou!');
+        setTimeout(() => {reiniciarJogoDaVelha();}, 1000);
+    } else if (caixa3 == caixa6 && caixa6 == caixa9 && caixa3 != ''){
+        alert('O jogador ' + caixa3 + ' ganhou!');
+        setTimeout(() => {reiniciarJogoDaVelha();}, 1000);
+    } else if (caixa1 == caixa5 && caixa5 == caixa9 && caixa1 != ''){
+        alert('O jogador ' + caixa1 + ' ganhou!');
+        setTimeout(() => {reiniciarJogoDaVelha();}, 1000);
+    } else if (caixa3 == caixa5 && caixa5 == caixa7 && caixa3 != ''){
+        alert('O jogador ' + caixa3 + ' ganhou!');
+        setTimeout(() => {reiniciarJogoDaVelha();}, 1000);
+    } else if (caixa1 != '' && caixa2 != '' && caixa3 != '' && caixa4 != '' && caixa5 != '' && caixa6 != '' && caixa7 != '' && caixa8 != '' && caixa9 != '' ){
+        alert('Deu velha.');
+        setTimeout(() => {reiniciarJogoDaVelha();}, 1000);
+    }}
+
+    function reiniciarJogoDaVelha() {
+        document.getElementById('jogoDaVelhaN1').textContent = '';
+        document.getElementById('jogoDaVelhaN2').textContent = '';
+        document.getElementById('jogoDaVelhaN3').textContent = '';
+        document.getElementById('jogoDaVelhaN4').textContent = '';
+        document.getElementById('jogoDaVelhaN5').textContent = '';
+        document.getElementById('jogoDaVelhaN6').textContent = '';
+        document.getElementById('jogoDaVelhaN7').textContent = '';
+        document.getElementById('jogoDaVelhaN8').textContent = '';
+        document.getElementById('jogoDaVelhaN9').textContent = '';
+        jogadorAtualJogoDaVelha = 'X';
+        document.getElementById('jogadorAtualExibicao').textContent = 'X';
+        document.getElementById('jogadorAtualExibicao').style.color = '#fc3f3f';
+    }
 
 function salvandoElementos() {
     localStorage.setItem('usuarios', JSON.stringify(usuarios));
