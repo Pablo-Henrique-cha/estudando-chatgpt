@@ -10,7 +10,9 @@ let numeroPergunta = 1;
 let pontos = 0;
 let usuarios = JSON.parse(localStorage.getItem('usuarios')) ? JSON.parse(localStorage.getItem('usuarios')) : {};
 let ligado = false;
+let cronometro;
 let jogadorAtualJogoDaVelha = 'X';
+let jogodavelhaGanhou = false;
 let cotacao = {
 
     //Real              //dolar             //Euro               //Iene               //Metical
@@ -223,6 +225,8 @@ function respondendo(tag) {
     setTimeout(() => {
         respostaDada.style.borderColor = '';
         document.getElementById(respostaCerta[numeroPergunta]).style.borderColor = '';
+        respostaDada.style.transform = 'scale(1)';
+        respostaDada.style.borderRadius = '5px';
         numeroPergunta++;
         proximaPergunta();
     }, 1000);
@@ -351,19 +355,45 @@ function comecarConometro() {
     let cronometroHora = document.getElementById('cronometroHora');
     ligado = !ligado
 
-    
-    //for (ligado == true) {
+    if (ligado == true) {
+    cronometro = setInterval (() => {
+            cronometroSegundo.textContent = parseInt(cronometroSegundo.textContent) +1;
+        if (cronometroSegundo.textContent == 60) {
+            cronometroSegundo.textContent = 0;
+            cronometroMinuto.textContent = parseInt(cronometroMinuto.textContent) +1;
+        }
+        if (cronometroMinuto.textContent == 60) {
+            cronometroMinuto.textContent = 0;
+            cronometroHora.textContent = parseInt(cronometroHora.textContent) +1;
+        }
+    },1000);
+    } else {
+        clearInterval(cronometro);
+    }
+}
 
-      //  setTimeout (() => {
-        //   return cronometroSegundo.textContent = parseInt(cronometroSegundo.textContent) +1;
-       // }, 1000 );
-   // }
-    
+function reiniciarCronometro() {
+    document.getElementById('cronometroSegundo').textContent = '00';
+    document.getElementById('cronometroMinuto').textContent = '00';
+    document.getElementById('cronometroHora').textContent = '00';
+    clearInterval(cronometro);
+    ligado = false;
+    document.getElementById('marcacaoCronometroDiv').style.display = 'none';
+    document.getElementById('marcacaoCronometroUl').innerHTML = '';
+}
 
+function marcacaoCronometro(){
+    document.getElementById('marcacaoCronometroDiv').style.display = 'flex';
+    let criarli = document.createElement('li');
+    criarli.textContent = '🚩' + document.getElementById('cronometroHora').textContent + ':' + document.getElementById('cronometroMinuto').textContent + ':' + document.getElementById('cronometroSegundo').textContent;
+    document.getElementById('marcacaoCronometroUl').appendChild(criarli);
 }
 
 function marcarJogoDaVelha(elementoClicado) {
 
+    if (jogodavelhaGanhou){
+        return;
+    }
     if (jogadorAtualJogoDaVelha == 'X'){
         elementoClicado.style.color = '#fc3f3f';
     } else {
@@ -408,30 +438,39 @@ function verificarGanhadorJogoDaVelha() {
 
     if (caixa1 == caixa2 && caixa2 == caixa3 && caixa1 != ''){
         alert('O jogador ' + caixa1 + ' ganhou!');
+        jogodavelhaGanhou = true;
         setTimeout(() => {reiniciarJogoDaVelha();}, 1000);
     } else if (caixa4 == caixa5 && caixa5 == caixa6 && caixa4 != ''){
         alert('O jogador ' + caixa4 + ' ganhou!');
+        jogodavelhaGanhou = true;
         setTimeout(() => {reiniciarJogoDaVelha();}, 1000);
     } else if (caixa7 == caixa8 && caixa8 == caixa9 && caixa7 != ''){
         alert('O jogador ' + caixa7 + ' ganhou!');
+        jogodavelhaGanhou = true;
         setTimeout(() => {reiniciarJogoDaVelha();}, 1000);
     } else if (caixa1 == caixa4 && caixa4 == caixa7 && caixa1 != ''){
         alert('O jogador ' + caixa1 + ' ganhou!');
+        jogodavelhaGanhou = true;
         setTimeout(() => {reiniciarJogoDaVelha();}, 1000);
     } else if (caixa2 == caixa5 && caixa5 == caixa8 && caixa2 != ''){
         alert('O jogador ' + caixa2 + ' ganhou!');
+        jogodavelhaGanhou = true;
         setTimeout(() => {reiniciarJogoDaVelha();}, 1000);
     } else if (caixa3 == caixa6 && caixa6 == caixa9 && caixa3 != ''){
         alert('O jogador ' + caixa3 + ' ganhou!');
+        jogodavelhaGanhou = true;
         setTimeout(() => {reiniciarJogoDaVelha();}, 1000);
     } else if (caixa1 == caixa5 && caixa5 == caixa9 && caixa1 != ''){
         alert('O jogador ' + caixa1 + ' ganhou!');
+        jogodavelhaGanhou = true;
         setTimeout(() => {reiniciarJogoDaVelha();}, 1000);
     } else if (caixa3 == caixa5 && caixa5 == caixa7 && caixa3 != ''){
         alert('O jogador ' + caixa3 + ' ganhou!');
+        jogodavelhaGanhou = true;
         setTimeout(() => {reiniciarJogoDaVelha();}, 1000);
     } else if (caixa1 != '' && caixa2 != '' && caixa3 != '' && caixa4 != '' && caixa5 != '' && caixa6 != '' && caixa7 != '' && caixa8 != '' && caixa9 != '' ){
         alert('Deu velha.');
+        jogodavelhaGanhou = true;
         setTimeout(() => {reiniciarJogoDaVelha();}, 1000);
     }}
 
@@ -446,6 +485,7 @@ function verificarGanhadorJogoDaVelha() {
         document.getElementById('jogoDaVelhaN8').textContent = '';
         document.getElementById('jogoDaVelhaN9').textContent = '';
         jogadorAtualJogoDaVelha = 'X';
+        jogodavelhaGanhou = false;
         document.getElementById('jogadorAtualExibicao').textContent = 'X';
         document.getElementById('jogadorAtualExibicao').style.color = '#fc3f3f';
     }

@@ -194,6 +194,13 @@ input:hover {
     border-radius: 4%;
 }
 
+.exercicio-cronometro{
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+    align-items: center;
+}
+
 .conteiner-cronometro {
     border: 3px solid var(--cor-terciaria);
     border-radius: 50%;
@@ -236,6 +243,18 @@ svg path {
     height: 15vh;
 }
 
+.conteiner-cronometro-marcacao {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 2%;
+    border: 2px solid var(--cor-terciaria);
+    border-radius: 15px;
+    width: 25vh;
+    height: auto;
+    font-size: 50%;
+}
+
 .conteiner-Jogo-Da-Velha {
     border: 4px solid var(--cor-terciaria);
     width: 85vh;
@@ -273,3 +292,81 @@ svg path {
 .conteiner-Jogo-Da-Velha-row-Bloco:hover{
     border-color: var(--cor-secundaria);
 }
+
+@media (max-width: 600px) {
+    html,  body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; 
+        width: 100%;
+    }
+    heder {
+        gap: 20px;
+    }
+   .titulo {
+        font-size: 60%;
+   }
+   .titulo p {
+        display: none;
+   }
+   .titulo_navegaçao img {
+        width: 25%;
+        height: 25%;
+   }
+   .exercicios {
+        font-size: 30%;
+   }
+   .exercicios button {
+        font-size: 95%;
+        width: auto;
+   }
+   .exercicios img {   
+        width: 50%;
+        height: 50%;
+    }      
+    .exercicio_Expecifico input button {
+        font-size: 95%;
+        width: auto;
+    }
+    .imputsmoedas {
+        width: 90%;
+    }
+    .imputsmoedas select {
+        width: 60%;
+        font-size: 2vh;
+    }
+    .imputsmoedas input {
+        width: 40%;
+        font-size: 2vh;
+    }
+    #conteinerQuiz {
+        width: 90%;
+        font-size: 2vh;
+    }
+    .formulario{
+        width: 90%;
+        padding-left: 8%;
+    }
+    .formulario input{
+        width: 100%;
+        font-size: 2vh;
+    }
+    .formulario button {
+        font-size: 2vh;
+        width: 15vh;
+        height: 6vh;
+    }
+    .conteiner-cronometro p {
+        font-size: 7vh;
+    }
+    .conteiner-Jogo-Da-Velha {
+        width: 90%;
+        height: 45vh;
+    }
+    .conteiner-Jogo-Da-Velha-row-Bloco button{
+        width: 100%;
+        height: 100%;
+        font-size: 10vh;
+    }
+
+}     
