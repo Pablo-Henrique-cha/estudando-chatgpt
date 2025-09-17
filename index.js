@@ -474,7 +474,7 @@ function verificarGanhadorJogoDaVelha() {
         setTimeout(() => {reiniciarJogoDaVelha();}, 1000);
     }}
 
-    function reiniciarJogoDaVelha() {
+function reiniciarJogoDaVelha() {
         document.getElementById('jogoDaVelhaN1').textContent = '';
         document.getElementById('jogoDaVelhaN2').textContent = '';
         document.getElementById('jogoDaVelhaN3').textContent = '';
@@ -489,6 +489,62 @@ function verificarGanhadorJogoDaVelha() {
         document.getElementById('jogadorAtualExibicao').textContent = 'X';
         document.getElementById('jogadorAtualExibicao').style.color = '#fc3f3f';
     }
+
+function adicionarNumeroCalculadora(numero) {
+    let displayCalculadora = document.getElementById('valorDisplayCalculadora');
+    if (displayCalculadora.textContent == '0') {
+        displayCalculadora.textContent = numero;
+    } else {
+        displayCalculadora.textContent += numero;
+    }
+}
+
+function adicionarOperacaoCalculadora(operacao) {
+    let displayCalculadora = document.getElementById('valorDisplayCalculadora');
+    if (operacao == '.') {
+        displayCalculadora.textContent += (operacao);
+    } else {
+        displayCalculadora.textContent += (' ' + operacao + ' ');
+    }
+}
+
+function calcularResultadoCalculadora() {
+    let displayCalculadora = document.getElementById('valorDisplayCalculadora');
+    let valores = displayCalculadora.textContent.split(' ');
+    valores = valores.filter(item => item !== '');
+    let i = 1;
+    console.log(valores);    
+
+    while ( i < valores.length) {
+        if (valores.length > 2) {
+            switch (valores[1]) {
+                case '+':
+                valores[0] = parseFloat(valores[0]) + parseFloat(valores[2]);  
+                valores.splice(i, 2);
+                    break;
+                case '-':
+                valores[0] = parseFloat(valores[0]) - parseFloat(valores[2]);
+                valores.splice(i, 2);    
+                    break;
+                case 'x':
+                valores[0] = parseFloat(valores[0]) * parseFloat(valores[2]);
+                valores.splice(i, 2);    
+                    break;
+                case '÷':
+                valores[0] = parseFloat(valores[0]) / parseFloat(valores[2]);    
+                valores.splice(i, 2);
+                    break;
+                default:
+                    alert('Operação invalida!');
+                    return;  }
+        }
+    };
+    displayCalculadora.textContent = valores;
+}
+
+function limparCalculadora() {
+    document.getElementById('valorDisplayCalculadora').textContent = '0';
+}
 
 function salvandoElementos() {
     localStorage.setItem('usuarios', JSON.stringify(usuarios));

@@ -41,8 +41,10 @@
         <h2>Lista de tarefas</h2>
         <div class="exercicio_Expecifico" id="conteinerTarefas">
             <input type="text" id="tarefainput" placeholder="Digite uma tarefa">
-            <button type="button" onclick="adicionarTarefa()">Adicionar tarefa</button>
-            <button type="button" onclick="removerTarefas()">Remover ultima tarefa</button>
+            <div>
+                <button type="button" onclick="adicionarTarefa()">Adicionar tarefa</button>
+                <button type="button" onclick="removerTarefas()">Remover ultima tarefa</button>
+            </div>      
         </div>    
         <ul id = "listatarefas">
         <li id = "verificador">Sem tarefas no momento!</li>
@@ -190,7 +192,40 @@
                 <div class="conteiner-Jogo-Da-Velha-row-Bloco">
                     <button id="jogoDaVelhaN9" onclick="marcarJogoDaVelha(this)"></button>
                 </div>
-            </div>
+            </div>    
+        </div>    
+        <h1>Calculadora</h1>
+        <div class="conteiner-calculadora">
+           <div class="conteiner-calculadora-display" id="displayCalculadora">
+                <button id="botaoLimparCalculadora" onclick="limparCalculadora()">C</button>
+                <p id="valorDisplayCalculadora">0</p>
+           </div>
+           <div  id="tecladoCalculadora" class="conteiner-calculadora-teclas">
+                <div class="conteiner-calculadora-teclas">
+                    <div onclick="adicionarNumeroCalculadora('7')"><p>7</p></div>
+                    <div onclick="adicionarNumeroCalculadora('8')"><p>8</p></div>
+                    <div onclick="adicionarNumeroCalculadora('9')"><p>9</p></div>
+                    <div onclick="adicionarOperacaoCalculadora('÷')"><p>÷</p></div>
+                </div>
+                <div class="conteiner-calculadora-teclas">
+                    <div onclick="adicionarNumeroCalculadora('4')"><p>4</p></div>
+                    <div onclick="adicionarNumeroCalculadora('5')"><p>5</p></div>
+                    <div onclick="adicionarNumeroCalculadora('6')"><p>6</p></div>
+                    <div onclick="adicionarOperacaoCalculadora('x')"><p>x</p></div>
+                </div>
+                <div class="conteiner-calculadora-teclas">
+                    <div onclick="adicionarNumeroCalculadora('1')"><p>1</p></div>
+                    <div onclick="adicionarNumeroCalculadora('2')"><p>2</p></div>
+                    <div onclick="adicionarNumeroCalculadora('3')"><p>3</p></div>
+                    <div onclick="adicionarOperacaoCalculadora('-')"><p>-</p></div>
+                </div>
+                <div class="conteiner-calculadora-teclas">
+                    <div onclick="adicionarNumeroCalculadora('0')"><p>0</p></div>
+                    <div onclick="adicionarOperacaoCalculadora('.')"><p>.</p></div>
+                    <div onclick="calcularResultadoCalculadora()"><p>=</p></div>
+                    <div onclick="adicionarOperacaoCalculadora('+')"><p>+</p></div>
+                </div>
+           </div> 
         </div>
     </div>  
 

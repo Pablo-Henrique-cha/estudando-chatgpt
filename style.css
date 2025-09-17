@@ -293,6 +293,48 @@ svg path {
     border-color: var(--cor-secundaria);
 }
 
+.conteiner-calculadora {
+    border: 2px solid var(--cor-terciaria);
+    border-radius: 15px;
+    width: 40vh;
+    height: 50vh;
+    font-size: 4vh;
+}
+
+.conteiner-calculadora-teclas {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--cor-terciaria);
+    height: 80%;
+}
+
+.conteiner-calculadora-teclas div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid var(--cor-terciaria);
+    align-items: center;
+    justify-content: space-around;
+}
+
+.conteiner-calculadora-teclas-espesifica {
+    border: 1px solid var(--cor-terciaria);
+}
+
+.conteiner-calculadora-display {
+    display: flex;
+    height: 20%;
+    align-items: center;
+    justify-content:space-between;
+    padding-right: 10%;
+    padding-left: 5%;
+}
+
+.conteiner-calculadora-teclas p:hover {
+    transform: scale(1.2);
+}
+
 @media (max-width: 600px) {
     html,  body {
         margin: 0;
@@ -324,9 +366,18 @@ svg path {
         width: 50%;
         height: 50%;
     }      
-    .exercicio_Expecifico input button {
-        font-size: 95%;
-        width: auto;
+    .exercicio_Expecifico div {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 8%;
+        height: 9vh;
+    }
+    .exercicio_Expecifico button {
+        font-size: 100%;
+        width: 100%;
+        height: 50%;
+
     }
     .imputsmoedas {
         width: 90%;
@@ -355,6 +406,11 @@ svg path {
         font-size: 2vh;
         width: 15vh;
         height: 6vh;
+    }
+    .exercicio-cronometro {
+        flex-direction: column;
+        gap: 3vh;
+        font-size: 3vh;
     }
     .conteiner-cronometro p {
         font-size: 7vh;
