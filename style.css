@@ -326,13 +326,141 @@ svg path {
     display: flex;
     height: 20%;
     align-items: center;
-    justify-content:space-between;
+    justify-content:end;
     padding-right: 10%;
-    padding-left: 5%;
+    overflow: hidden;
+}
+
+.conteiner-calculadora-display button {
+    width: 6vh;
 }
 
 .conteiner-calculadora-teclas p:hover {
     transform: scale(1.2);
+}
+
+.conteiner-Batalha-Pokemon {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--cor-terciaria); 
+    height: 35vh;
+    width: 50vh;
+}
+
+.conteiner-Batalha-Pokemon-interface {
+    display: flex;
+    flex-direction: row;
+    height: 35%;
+    gap: 1.5%;
+    background-color: #484151;
+    padding-top: 0.5%;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.conteiner-Batalha-Pokemon-interface-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+    border: 8px solid #8a83c2;
+    border-radius: 5%;
+    width: 45%;
+    background-color: #f8f8f8;
+    padding:2%;
+}
+
+.conteiner-Batalha-Pokemon-interface-menu-opecoes {
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+}
+
+.conteiner-Batalha-Pokemon-interface-menu-opcoes button{
+    border: none;
+    background-color: #f8f8f8;
+    border-radius: 0%;
+    color: #3f3f3f;
+    height: 50%;
+    width: 100%;
+    text-shadow: 2px 2px 4px #90908d;
+}
+
+.conteiner-Batalha-Pokemon-interface-discricao{
+    border-width: 1px 0px 1px 13px;
+    border-style: solid;
+    border-color: #d04838;
+    border-radius: 15px 0 0 15px;
+    width: 55%;
+    background-color: #69a5a5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10%;
+    padding-left: 1%;
+}
+
+.conteiner-Batalha-Pokemon-displey {
+    display: flex;
+    flex-direction: column;
+    height: 65%;
+    width: 100%;
+    padding: 2% 6% 0 6%;
+    background-image: url('imgs/fundoPokemon.png');
+    background-size: contain;
+}
+
+.conteiner-Batalha-Pokemon-displey-conteiner {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.conteiner-Batalha-Pokemon-displey-imagens {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.conteiner-Batalha-Pokemon-displey-imagens div {
+    width: 100%;
+    height: 100%;
+}
+
+.conteiner-Batalha-Pokemon-displey-vida {
+    border: 4px solid #1f3900;
+    background-color: #ffffdc;
+    color: #424242;
+    border-radius: 15px;
+    width: 45%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 2% 0 2%;
+}
+
+.conteiner-Batalha-Pokemon-displey-vida-barra {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #1f3900;
+    background-color: #2e4231;
+    border-radius: 15px;
+    margin: 1% 0 1% 15%;
+    font-size: small;
+    color: #ec9333;
+    align-items: center;
+    height: 30%;
+}
+
+.conteiner-Batalha-Pokemon-displey-vida-barra-atual {
+    background-color: #4caf50;
+    border: 0.5px solid #ffff;
+    border-radius: 15px;
+    width: 90%;
+    height: 90%;
+    text-align: center;
 }
 
 @media (max-width: 600px) {

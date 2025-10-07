@@ -13,6 +13,12 @@ let ligado = false;
 let cronometro;
 let jogadorAtualJogoDaVelha = 'X';
 let jogodavelhaGanhou = false;
+let ataquesPokemon = {
+    'Jogador' : [],
+    'Inimigo' :[]
+};
+let PokemonJogadorInformaçao;
+let PokemonInimigoInformaçao;
 let cotacao = {
 
     //Real              //dolar             //Euro               //Iene               //Metical
@@ -250,6 +256,10 @@ function proximaPergunta() {
 
 }
 
+if (localStorage.getItem('usuarios')) {
+    document.getElementById('usuariosCriados').innerText = Object.keys(JSON.parse(localStorage.getItem('usuarios'))).length / 3;
+}
+
 document.getElementById('formulario').addEventListener("submit", function(event) {
     event.preventDefault(); 
 
@@ -287,7 +297,7 @@ function criarUsuario(tag) {
     usuarios[tag.get('nomeUsuario').trim() + 'nome'] = tag.get('nomeCompletoUsuario').trim();
     alert('Usuario criado com sucesso!')
     salvandoElementos();
-
+    document.getElementById('usuariosCriados').innerText = Object.keys(usuarios).length / 3;
 }
 
 function validarSenha() {
@@ -356,6 +366,8 @@ function comecarConometro() {
     ligado = !ligado
 
     if (ligado == true) {
+        document.querySelector("#botaoComecar g#SVGRepo_iconCarrier").innerHTML = `<path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#323232" stroke-width="2"></path>
+    <path d="M10 8L16 12L10 16Z" fill="#323232"></path>`;
     cronometro = setInterval (() => {
             cronometroSegundo.textContent = parseInt(cronometroSegundo.textContent) +1;
         if (cronometroSegundo.textContent == 60) {
@@ -369,6 +381,7 @@ function comecarConometro() {
     },1000);
     } else {
         clearInterval(cronometro);
+        document.querySelector("#botaoComecar g#SVGRepo_iconCarrier").innerHTML = `<svg onclick="comecarConometro()" viewBox="0 0 30 30" id="botaoComecar" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#323232" stroke-width="2"></path> <path d="M14 9L14 15" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M10 9L10 15" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>`;
     }
 }
 
@@ -380,6 +393,7 @@ function reiniciarCronometro() {
     ligado = false;
     document.getElementById('marcacaoCronometroDiv').style.display = 'none';
     document.getElementById('marcacaoCronometroUl').innerHTML = '';
+    document.querySelector("#botaoComecar g#SVGRepo_iconCarrier").innerHTML = `<svg onclick="comecarConometro()" viewBox="0 0 30 30" id="botaoComecar" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#323232" stroke-width="2"></path> <path d="M14 9L14 15" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M10 9L10 15" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>`;
 }
 
 function marcacaoCronometro(){
@@ -517,6 +531,11 @@ function calcularResultadoCalculadora() {
 
     while ( i < valores.length) {
         if (valores.length > 2) {
+            if (valores.includes('%') && valores[valores.indexOf('%') - 2] != Number && valores[valores.indexOf('%') - 2] != undefined) {
+                valores[(valores.indexOf('%') - 1)] = (parseFloat(valores[(valores.indexOf('%') - 1)]) / 100) * parseFloat(valores[(valores.indexOf('%') - 3)]);
+                valores.splice(valores.indexOf('%'), 1);
+            }
+
             switch (valores[1]) {
                 case '+':
                 valores[0] = parseFloat(valores[0]) + parseFloat(valores[2]);  
@@ -534,9 +553,13 @@ function calcularResultadoCalculadora() {
                 valores[0] = parseFloat(valores[0]) / parseFloat(valores[2]);    
                 valores.splice(i, 2);
                     break;
+                case '%':
+                valores[0] = (parseFloat(valores[0]) / 100) * parseFloat(valores[2]);    
+                valores.splice(i, 2);
+                    break;    
                 default:
                     alert('Operação invalida!');
-                    return;  }
+                    break;  }
         }
     };
     displayCalculadora.textContent = valores;
@@ -544,6 +567,127 @@ function calcularResultadoCalculadora() {
 
 function limparCalculadora() {
     document.getElementById('valorDisplayCalculadora').textContent = '0';
+}
+
+const PokemonJogador = 'https://pokeapi.co/api/v2/pokemon/33/';
+
+fetch(PokemonJogador)
+ .then(response => response.json())
+ .then(data => {
+
+    document.getElementById('PokemonNomeJogador').textContent = data.name;
+    document.getElementById('SpritPokemonJogador').src = data.sprites.back_default;
+    PokemonJogadorInformaçao = data;
+ });
+
+const PokemonInimigo = 'https://pokeapi.co/api/v2/pokemon/94/';
+
+fetch(PokemonInimigo)
+ .then(response => response.json())
+ .then(data => {
+
+    document.getElementById('PokemonNomeInimigo').textContent = data.name;
+    document.getElementById('SpritPokemonInimigo').src = data.sprites.front_default;
+    PokemonInimigoInformaçao = data;
+ });
+
+async function comecarLutaPokemon() {
+
+    let menuAtagues = document.getElementById('conteinerPokemonInterfaceDiscricao');
+
+    document.getElementById('menuOpcoesDireita').innerHTML = `
+    <button id="ppPokemon" style="font-size: 120%; cursor:default;">35/35</button>
+    <button id="tipoPokemon" style="font-size: 120%; cursor:default;">-- --</button>
+    `;
+    document.getElementById('menuOpcoesEsquerda').innerHTML = `
+    <button style="font-size: 120%; cursor:default;">PP</button>
+    <button style="font-size: 120%; cursor:default;">Type</button>
+    `;
+    menuAtagues.innerHTML = `
+   <div id="menuOpcoesEsquerda" class="conteiner-Batalha-Pokemon-interface-menu-opcoes">
+        <button onclick='atacarPokemon(0)' id='Ataque1'>-- --</button>
+        <button onclick='atacarPokemon(1)' id='Ataque2'>-- --</button>
+    </div>
+    <div id="menuOpcoesDireita" class="conteiner-Batalha-Pokemon-interface-menu-opcoes">
+        <button onclick='atacarPokemon(2)' id='Ataque3'>-- --</button>
+        <button onclick='atacarPokemon(3)' id='Ataque4'>-- --</button>
+    </div>  
+    `;
+    menuAtagues.className = 'conteiner-Batalha-Pokemon-interface-menu';
+    menuAtagues.style.width = '65%';
+
+    await validandoGolpesPokemon('Jogador');
+    await validandoGolpesPokemon('Inimigo');
+    atualizandoGolpesPokemon();
+}
+
+function atualizandoGolpesPokemon() {
+    document.getElementById('Ataque1').textContent = ataquesPokemon['Jogador'][0].nome;
+    document.getElementById('tipoPokemon').textContent = ataquesPokemon['Jogador'][0].tipo;
+    document.getElementById('ppPokemon').textContent = ataquesPokemon['Jogador'][0].pp;
+    document.getElementById('Ataque2').textContent = ataquesPokemon['Jogador'][1].nome;
+    document.getElementById('Ataque3').textContent = ataquesPokemon['Jogador'][2].nome;
+    document.getElementById('Ataque4').textContent = ataquesPokemon['Jogador'][3].nome;
+}
+
+async function validandoGolpesPokemon(alvo) {
+    let urlAlvo;
+    if (alvo == 'Jogador') {
+        urlAlvo = PokemonJogador;
+    } else {
+        urlAlvo = PokemonInimigo;
+    };
+
+    while (ataquesPokemon[alvo].length < 4) {
+
+        let urlGolpeSorteado = pegaGolpeAleatorioPokemon(PokemonJogador);
+        const response = await fetch(await urlGolpeSorteado);
+        const data = await response.json();
+        
+            if(data.power != null || data.power == Number) {
+                ataquesPokemon[alvo].push({
+                    url: urlGolpeSorteado,
+                    nome: data.name,
+                    poder: data.power,
+                    pp: data.pp,
+                    tipo: data.type.name
+                });
+            };
+        }
+        console.log(ataquesPokemon['Jogador']);
+        
+}
+
+async function pegaGolpeAleatorioPokemon(pokemonAlvo) {
+
+    let golpe;
+    const response = await fetch(pokemonAlvo);
+    const data = await response.json();
+    let numeroAleatorio = Math.floor(Math.random() * data.moves.length);
+    let listaAtaques = data.moves;
+    golpe = listaAtaques[numeroAleatorio].move.url;
+    return golpe;
+}
+
+function atacarPokemon(numeroAtaque) {
+    
+    ataquesPokemon['Jogador'][numeroAtaque].pp--;
+    atualizandoGolpesPokemon();
+    darDanoPokemon(ataquesPokemon['Jogador'][numeroAtaque].poder, PokemonJogadorInformaçao.stats[1].base_stat, PokemonInimigoInformaçao.stats[2].base_stat, 'Inimigo');
+    setTimeout(() => darDanoPokemon(ataquesPokemon['Inimigo'][Math.floor(Math.random() * 4)].poder, PokemonInimigoInformaçao.stats[1].base_stat, PokemonJogadorInformaçao.stats[2].base_stat, 'Jogador'), 1000);
+    
+}
+
+function darDanoPokemon(power , attack, defense ,alvo) {
+    let quantiaDano = (( defense / power ) * attack) / 2;
+    let vidaAlvoTamanho = document.getElementById('PokemonVida' + alvo).getBoundingClientRect();
+    let vidaAlvo = document.getElementById('PokemonVida' + alvo);
+    if (vidaAlvoTamanho.width < quantiaDano) {
+        vidaAlvo.style.width = '0px';
+        vidaAlvo.style.display = 'nome';
+    } else {
+      document.getElementById('PokemonVida' + alvo).style.width = (vidaAlvoTamanho.width - quantiaDano) + 'px';  
+    }
 }
 
 function salvandoElementos() {
