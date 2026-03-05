@@ -594,6 +594,8 @@ fetch(PokemonInimigo)
 async function comecarLutaPokemon() {
 
     let menuAtagues = document.getElementById('conteinerPokemonInterfaceDiscricao');
+    let audioLuta = new Audio('Sound/battleMusic.mp3');
+    audioLuta.play();
 
     document.getElementById('menuOpcoesDireita').innerHTML = `
     <button id="ppPokemon" style="font-size: 120%; cursor:default;">35/35</button>
@@ -618,10 +620,12 @@ async function comecarLutaPokemon() {
 
     await validandoGolpesPokemon('Jogador');
     await validandoGolpesPokemon('Inimigo');
-    atualizandoGolpesPokemon();
+    imprimindoGolpesTelaPokemon();
+    document.getElementById('SpritPokemonJogador').style.animation = 'balancarPokemon 0.5s infinite ease-in-out';
+    document.getElementById('SpritPokemonInimigo').style.animation = 'balancarPokemon 0.6s infinite ease-in-out';
 }
 
-function atualizandoGolpesPokemon() {
+function imprimindoGolpesTelaPokemon() {
     document.getElementById('Ataque1').textContent = ataquesPokemon['Jogador'][0].nome;
     document.getElementById('tipoPokemon').textContent = ataquesPokemon['Jogador'][0].tipo;
     document.getElementById('ppPokemon').textContent = ataquesPokemon['Jogador'][0].pp;
@@ -669,10 +673,15 @@ async function pegaGolpeAleatorioPokemon(pokemonAlvo) {
     return golpe;
 }
 
+function atualizandoGolpesPokemon(numeroAtaque) {
+    document.getElementById('ppPokemon').textContent = ataquesPokemon['Jogador'][numeroAtaque].pp;
+    document.getElementById('tipoPokemon').textContent = ataquesPokemon['Jogador'][numeroAtaque].tipo;
+}
+
 function atacarPokemon(numeroAtaque) {
     
     ataquesPokemon['Jogador'][numeroAtaque].pp--;
-    atualizandoGolpesPokemon();
+    atualizandoGolpesPokemon(numeroAtaque);
     darDanoPokemon(ataquesPokemon['Jogador'][numeroAtaque].poder, PokemonJogadorInformaçao.stats[1].base_stat, PokemonInimigoInformaçao.stats[2].base_stat, 'Inimigo');
     setTimeout(() => darDanoPokemon(ataquesPokemon['Inimigo'][Math.floor(Math.random() * 4)].poder, PokemonInimigoInformaçao.stats[1].base_stat, PokemonJogadorInformaçao.stats[2].base_stat, 'Jogador'), 1000);
     
@@ -682,11 +691,27 @@ function darDanoPokemon(power , attack, defense ,alvo) {
     let quantiaDano = (( defense / power ) * attack) / 2;
     let vidaAlvoTamanho = document.getElementById('PokemonVida' + alvo).getBoundingClientRect();
     let vidaAlvo = document.getElementById('PokemonVida' + alvo);
+    if (alvo == 'Inimigo') {
+        document.getElementById('SpritPokemonJogador').style.animation = 'atacarPokemon 0.5s';
+        setTimeout(() => {document.getElementById('SpritPokemonJogador').style.animation = 'balancarPokemon 0.5s infinite ease-in-out';}, 500);
+    } else {
+        document.getElementById('SpritPokemonInimigo').style.animation = 'atacarPokemon 0.5s';
+        setTimeout(() => {document.getElementById('SpritPokemonInimigo').style.animation = 'balancarPokemon 0.6s infinite ease-in-out';}, 500);
+    }
     if (vidaAlvoTamanho.width < quantiaDano) {
         vidaAlvo.style.width = '0px';
         vidaAlvo.style.display = 'nome';
     } else {
       document.getElementById('PokemonVida' + alvo).style.width = (vidaAlvoTamanho.width - quantiaDano) + 'px';  
+    }
+    verificarVencedorPokemon();
+}
+
+function verificarVencedorPokemon() {
+    if (document.getElementById('PokemonVidaInimigo').style.width == '0px') {
+        alert('Parabens, você venceu a batalha!');
+    } else if (document.getElementById('PokemonVidaJogador').style.width == '0px') {
+        alert('Infelizmente, você perdeu a batalha!');
     }
 }
 

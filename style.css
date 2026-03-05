@@ -355,6 +355,8 @@ svg path {
     background-color: #484151;
     padding-top: 0.5%;
     text-shadow: 2px 2px 4px #000000;
+    position: relative;
+    z-index: 10;
 }
 
 .conteiner-Batalha-Pokemon-interface-menu {
@@ -366,6 +368,7 @@ svg path {
     width: 45%;
     background-color: #f8f8f8;
     padding:2%;
+
 }
 
 .conteiner-Batalha-Pokemon-interface-menu-opecoes {
@@ -461,6 +464,34 @@ svg path {
     width: 90%;
     height: 90%;
     text-align: center;
+}
+
+.SpritPokemonInimigo {
+    animation:'';
+    transform-origin: bottom center;
+}
+
+.SpritPokemonjogador {
+    animation:'';
+    transform-origin: bottom center;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes balancarPokemon {
+    0% { transform: translateY(0) translateX(0); }
+    25% { transform: translateY(-5px) translateX(5px); }
+    50% { transform: translateY(0px) translateX(10px); }
+    75% { transform: translateY(-5px) translateX(5px); }
+    100% { transform: translateY(0) translateX(0); }
+}
+
+@keyframes atacarPokemon {
+    0% { transform: translateY(0) translateX(0); }
+    25% { transform: translateY(-10px) translateX(25px); }
+    50% { transform: translateY(0px) translateX(40px); }
+    75% { transform: translateY(-10px) translateX(25px); }
+    100% { transform: translateY(0) translateX(0); }    
 }
 
 @media (max-width: 600px) {
