@@ -577,6 +577,7 @@ fetch(PokemonJogador)
 
     document.getElementById('PokemonNomeJogador').textContent = data.name;
     document.getElementById('SpritPokemonJogador').src = data.sprites.back_default;
+    document.getElementById('PokemonNome').textContent = data.name + ' do?';
     PokemonJogadorInformaçao = data;
  });
 
@@ -595,6 +596,7 @@ async function comecarLutaPokemon() {
 
     let menuAtagues = document.getElementById('conteinerPokemonInterfaceDiscricao');
     let audioLuta = new Audio('Sound/battleMusic.mp3');
+    audioLuta.volume = 0.2;
     audioLuta.play();
 
     document.getElementById('menuOpcoesDireita').innerHTML = `
@@ -678,25 +680,36 @@ function atualizandoGolpesPokemon(numeroAtaque) {
     document.getElementById('tipoPokemon').textContent = ataquesPokemon['Jogador'][numeroAtaque].tipo;
 }
 
-function atacarPokemon(numeroAtaque) {
+async function atacarPokemon(numeroAtaque) {
     
     ataquesPokemon['Jogador'][numeroAtaque].pp--;
     atualizandoGolpesPokemon(numeroAtaque);
     darDanoPokemon(ataquesPokemon['Jogador'][numeroAtaque].poder, PokemonJogadorInformaçao.stats[1].base_stat, PokemonInimigoInformaçao.stats[2].base_stat, 'Inimigo');
-    setTimeout(() => darDanoPokemon(ataquesPokemon['Inimigo'][Math.floor(Math.random() * 4)].poder, PokemonInimigoInformaçao.stats[1].base_stat, PokemonJogadorInformaçao.stats[2].base_stat, 'Jogador'), 1000);
+    setTimeout(() => {
+        if (verificarVencedorPokemon() == true) {
+        return;
+    } else {
+        darDanoPokemon(ataquesPokemon['Inimigo'][Math.floor(Math.random() * 4)].poder, PokemonInimigoInformaçao.stats[1].base_stat, PokemonJogadorInformaçao.stats[2].base_stat, 'Jogador'); 
+        setTimeout(() => { verificarVencedorPokemon();}, 100);
+    }
+     }, 500);
     
 }
 
-function darDanoPokemon(power , attack, defense ,alvo) {
+async function darDanoPokemon(power , attack, defense ,alvo) {
     let quantiaDano = (( defense / power ) * attack) / 2;
     let vidaAlvoTamanho = document.getElementById('PokemonVida' + alvo).getBoundingClientRect();
     let vidaAlvo = document.getElementById('PokemonVida' + alvo);
+    let audioDano = new Audio('Sound/damage.mp3');
+
     if (alvo == 'Inimigo') {
         document.getElementById('SpritPokemonJogador').style.animation = 'atacarPokemon 0.5s';
-        setTimeout(() => {document.getElementById('SpritPokemonJogador').style.animation = 'balancarPokemon 0.5s infinite ease-in-out';}, 500);
+        audioDano.play();
+        await setTimeout(() => {document.getElementById('SpritPokemonJogador').style.animation = 'balancarPokemon 0.5s infinite ease-in-out';}, 500);
     } else {
         document.getElementById('SpritPokemonInimigo').style.animation = 'atacarPokemon 0.5s';
-        setTimeout(() => {document.getElementById('SpritPokemonInimigo').style.animation = 'balancarPokemon 0.6s infinite ease-in-out';}, 500);
+        audioDano.play();
+        await setTimeout(() => {document.getElementById('SpritPokemonInimigo').style.animation = 'balancarPokemon 0.6s infinite ease-in-out';}, 500);
     }
     if (vidaAlvoTamanho.width < quantiaDano) {
         vidaAlvo.style.width = '0px';
@@ -704,15 +717,28 @@ function darDanoPokemon(power , attack, defense ,alvo) {
     } else {
       document.getElementById('PokemonVida' + alvo).style.width = (vidaAlvoTamanho.width - quantiaDano) + 'px';  
     }
-    verificarVencedorPokemon();
+}
+
+function exibindoMenuAcaoesPokemon() {
+
 }
 
 function verificarVencedorPokemon() {
     if (document.getElementById('PokemonVidaInimigo').style.width == '0px') {
         alert('Parabens, você venceu a batalha!');
+        return true;
     } else if (document.getElementById('PokemonVidaJogador').style.width == '0px') {
         alert('Infelizmente, você perdeu a batalha!');
+        return true;
+    } else{
+        return false;
     }
+}
+
+function telaTrocaPokemon() {
+    document.getElementById('SpritPokemonJogadorTroca').src = PokemonJogadorInformaçao.sprites.front_default; 
+    document.getElementById('PokemonNomeJogadorTroca').textContent = PokemonJogadorInformaçao.name;
+    document.getElementById('PokemonVidaJogadorTroca').style.width = document.getElementById('PokemonVidaJogador').style.width;
 }
 
 function salvandoElementos() {

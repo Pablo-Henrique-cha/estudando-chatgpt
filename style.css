@@ -371,6 +371,11 @@ svg path {
 
 }
 
+.conteiner-Batalha-Pokemon-interface-menu button:hover {
+    border: 2px solid #e48046;
+    border-radius: 4px;
+}
+
 .conteiner-Batalha-Pokemon-interface-menu-opecoes {
     display: flex;
     flex-direction: column;
@@ -476,6 +481,100 @@ svg path {
     transform-origin: bottom center;
     position: relative;
     z-index: 1;
+}
+
+.svg-pokemon {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+}
+
+.conteiner-Pokemon-troca {
+    display: flex;
+    flex-direction: row;
+}
+
+.conteiner-Pokemon-Atual-troca {
+    height: 40%;
+    width: 95%;
+    background: url(imgs/fundoPokemonTrocaIcone.png);
+    margin-top: 35%;
+    margin-left: 1%;
+    margin-right: 5%;
+    padding-bottom: 5%;
+
+}
+
+.conteiner-Pokemon-Atual-troca:hover {
+    border: 5px solid #e48046;
+    border-radius: 5px;
+}
+
+.conteiner-Pokemon-Atual-Nome-troca {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 70%;
+}
+
+#SpritPokemonJogadorTroca {
+    width: 100%;
+    height: 100%;
+}
+
+#PokemonNomeJogadorTroca {
+    font-size: 150%;
+    color: #fff;
+    text-shadow: 1px 1px 2px #2a2a2a;
+    padding: 15% 5% 0 0;
+}
+
+#PokemonVidaJogadorTrocaConteiner {
+    margin: 0 3% 7% 15%;
+    width: 80%;
+    height: 15%;
+}
+
+.conteiner-Pokemon-Disponivel-troca {
+    border-top: 2px solid #93938f;
+    border-left: 2px solid #93938f;
+    width: 100%;
+    box-shadow: 0 0 5px #132101;
+}
+
+.conteiner-Inf-Troca {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 1%;
+}
+
+.conteiner-Texto-Troca {
+    border: 8px solid #8a83c2;
+    border-radius: 5%;
+    background-color: #f8f8f8;
+    color: #3f3f3f;
+    text-shadow: 2px 2px 4px #90908d;
+    box-shadow: 0 0 10px #132101;
+    width: 75%;
+    padding: 2%;
+}
+
+.conteiner-Botao-Cancelar-Troca {
+    border: 3px solid #1d102c;
+    border-radius: 14px;
+    height: 50%;
+    width: 20%;
+    margin: 6% 2% 1.5% 0;
+    background-color: #5520ab;
+}
+
+.conteiner-Botao-Cancelar-Troca:hover {
+    transform: scale(0.95);
+}
+
+.conteiner-Botao-Cancelar-Troca h2 {
+    font-size: 150%;
+    text-align: center  ;
 }
 
 @keyframes balancarPokemon {

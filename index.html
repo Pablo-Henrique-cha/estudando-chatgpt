@@ -274,12 +274,55 @@
                 <div class="conteiner-Batalha-Pokemon-interface-menu">
                    <div id="menuOpcoesEsquerda" class="conteiner-Batalha-Pokemon-interface-menu-opcoes">
                         <button onclick="comecarLutaPokemon()">FIGHT</button>
-                        <button>POKÉMON</button>
+                        <button onclick="telaTrocaPokemon()">POKÉMON</button>
                     </div>
                     <div id="menuOpcoesDireita" class="conteiner-Batalha-Pokemon-interface-menu-opcoes">
                         <button>BAG</button>
                         <button>RUN</button>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="conteiner-Batalha-Pokemon" style="background-image: url(imgs/troca-Pokemon-Fundo.svg); background-size: cover;">
+            <div class="conteiner-Pokemon-troca" style="width: 100%; height: 85%;">
+                <div style="width: 40%; height: 100%;">
+                    <div class="conteiner-Pokemon-Atual-troca">
+                        <div class="conteiner-Pokemon-Atual-Nome-troca">
+                            <img src="" id="SpritPokemonJogadorTroca" alt="Pokemno Atual">
+                            <p id="PokemonNomeJogadorTroca"></p>
+                        </div>
+                        <div id="PokemonVidaJogadorTrocaConteiner" class="conteiner-Batalha-Pokemon-displey-vida-barra">
+                            <p>HP</p>
+                            <div id="PokemonVidaJogadorTroca" class="conteiner-Batalha-Pokemon-displey-vida-barra-atual" style="height:9px;"></div>
+                        </div> 
+
+                    </div>
+                </div>
+                <div style="width: 70%; height: 100%; display: flex; flex-wrap: wrap; gap: 10px; padding: 5% 2% 0.5% 0;">
+                    <div class="conteiner-Pokemon-Disponivel-troca">
+                        
+                    </div>
+                    <div class="conteiner-Pokemon-Disponivel-troca">
+                        
+                    </div>
+                    <div class="conteiner-Pokemon-Disponivel-troca">
+                        
+                    </div>
+                    <div class="conteiner-Pokemon-Disponivel-troca">
+                        
+                    </div>
+                    <div class="conteiner-Pokemon-Disponivel-troca">
+                        
+                    </div>
+                </div>
+            </div>
+            <div style="width: 100%; height: 20%;" class="conteiner-Inf-Troca">
+                <div class="conteiner-Texto-Troca">
+                    <h2>Choose a Pokémon.</h2>
+                </div>
+                <div class="conteiner-Botao-Cancelar-Troca">
+                    <h2 onclick="cancelarTrocaPokemon()">Cancel</h2>
                 </div>
             </div>
         </div>
