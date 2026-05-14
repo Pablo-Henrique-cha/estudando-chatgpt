@@ -345,6 +345,8 @@ svg path {
     border: 1px solid var(--cor-terciaria); 
     height: 35vh;
     width: 50vh;
+    overflow: hidden;
+    position: relative;
 }
 
 .conteiner-Batalha-Pokemon-interface {
@@ -371,7 +373,7 @@ svg path {
 
 }
 
-.conteiner-Batalha-Pokemon-interface-menu button:hover {
+.conteiner-Batalha-Pokemon-interface-menu-button:hover {
     border: 2px solid #e48046;
     border-radius: 4px;
 }
@@ -510,6 +512,10 @@ svg path {
     border-radius: 5px;
 }
 
+.conteiner-Pokemon-Atual-troca:hover #SpritPokemonJogadorTroca {
+    animation: balancarPokemon 0.6s ease-in-out infinite;
+}
+
 .conteiner-Pokemon-Atual-Nome-troca {
     display: flex;
     flex-direction: row;
@@ -577,6 +583,43 @@ svg path {
     text-align: center  ;
 }
 
+.conteiner-Batalha-Pokemon-Resultado {
+    background: #00000090;
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column; 
+    height: 100%;
+    width: 100%;
+    z-index: 9999;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    align-items: center;
+}
+
+.conteiner-Batalha-Pokemon-Resultado-conteiner{
+    border: 8px solid #8a83c2;
+    border-radius: 5%;
+    background-color: #f8f8f8;
+    color: #3f3f3f;
+    text-shadow: 2px 2px 4px #90908d;
+    box-shadow: 0 0 10px #132101;
+    margin: 21.5% 10% 21.5% 10%;
+}
+
+.conteiner-Batalha-Pokemon-Resultado-conteiner h1{
+    font-size: 150%;
+    text-align: center;
+}
+
+.conteiner-Batalha-Pokemon-Resultado-conteiner button {
+    border: 3px solid #1d102c;
+    border-radius: 14px;
+    background-color: #5520ab;
+    margin: 0 38% 1% 38%;
+}
+
 @keyframes balancarPokemon {
     0% { transform: translateY(0) translateX(0); }
     25% { transform: translateY(-5px) translateX(5px); }
@@ -591,6 +634,11 @@ svg path {
     50% { transform: translateY(0px) translateX(40px); }
     75% { transform: translateY(-10px) translateX(25px); }
     100% { transform: translateY(0) translateX(0); }    
+}
+
+@keyframes foraCombatepokemon {
+    0% { transform: translateY(0) translateX(0); }
+    100% { transform: translateY(120px) translateX(0); }
 }
 
 @media (max-width: 600px) {

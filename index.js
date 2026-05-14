@@ -19,6 +19,8 @@ let ataquesPokemon = {
 };
 let PokemonJogadorInformaçao;
 let PokemonInimigoInformaçao;
+let audioVitoria = new Audio('Sound/battleVictoryMusic.mp3');
+let audioLuta = new Audio('Sound/battleMusic.mp3');
 let cotacao = {
 
     //Real              //dolar             //Euro               //Iene               //Metical
@@ -595,7 +597,6 @@ fetch(PokemonInimigo)
 async function comecarLutaPokemon() {
 
     let menuAtagues = document.getElementById('conteinerPokemonInterfaceDiscricao');
-    let audioLuta = new Audio('Sound/battleMusic.mp3');
     audioLuta.volume = 0.2;
     audioLuta.play();
 
@@ -608,13 +609,13 @@ async function comecarLutaPokemon() {
     <button style="font-size: 120%; cursor:default;">Type</button>
     `;
     menuAtagues.innerHTML = `
-   <div id="menuOpcoesEsquerda" class="conteiner-Batalha-Pokemon-interface-menu-opcoes">
-        <button onclick='atacarPokemon(0)' id='Ataque1'>-- --</button>
-        <button onclick='atacarPokemon(1)' id='Ataque2'>-- --</button>
+   <div id="menuAtaquesEsquerda" class="conteiner-Batalha-Pokemon-interface-menu-opcoes">
+        <button class="conteiner-Batalha-Pokemon-interface-menu-button" onclick='atacarPokemon(0)' id='Ataque1'>-- --</button>
+        <button class="conteiner-Batalha-Pokemon-interface-menu-button" onclick='atacarPokemon(1)' id='Ataque2'>-- --</button>
     </div>
-    <div id="menuOpcoesDireita" class="conteiner-Batalha-Pokemon-interface-menu-opcoes">
-        <button onclick='atacarPokemon(2)' id='Ataque3'>-- --</button>
-        <button onclick='atacarPokemon(3)' id='Ataque4'>-- --</button>
+    <div id="menuAtaquesDireita" class="conteiner-Batalha-Pokemon-interface-menu-opcoes">
+        <button class="conteiner-Batalha-Pokemon-interface-menu-button" onclick='atacarPokemon(2)' id='Ataque3'>-- --</button>
+        <button class="conteiner-Batalha-Pokemon-interface-menu-button" onclick='atacarPokemon(3)' id='Ataque4'>-- --</button>
     </div>  
     `;
     menuAtagues.className = 'conteiner-Batalha-Pokemon-interface-menu';
@@ -693,7 +694,24 @@ async function atacarPokemon(numeroAtaque) {
         setTimeout(() => { verificarVencedorPokemon();}, 100);
     }
      }, 500);
+    setTimeout(() => {
+        voltarMenuPokemon();
+    }, 600);
     
+}
+
+function voltarMenuPokemon() {
+    document.getElementById('menuOpcoesEsquerda').innerHTML = `
+        <button class="conteiner-Batalha-Pokemon-interface-menu-button" onclick="comecarLutaPokemon()">FIGHT</button>
+        <button class="conteiner-Batalha-Pokemon-interface-menu-button" onclick="telaTrocaPokemon()">POKÉMON</button>`;
+    document.getElementById('menuOpcoesDireita').innerHTML = `
+        <button class="conteiner-Batalha-Pokemon-interface-menu-button">BAG</button>
+        <button class="conteiner-Batalha-Pokemon-interface-menu-button">RUN</button>`;
+        
+    document.getElementById('conteinerPokemonInterfaceDiscricao').innerHTML = `
+        <h2>What will</h2>
+        <h2 id="PokemonNome">Pokemon do?</h2>`;
+    document.getElementById('conteinerPokemonInterfaceDiscricao').className = 'conteiner-Batalha-Pokemon-interface-discricao';      
 }
 
 async function darDanoPokemon(power , attack, defense ,alvo) {
@@ -719,16 +737,29 @@ async function darDanoPokemon(power , attack, defense ,alvo) {
     }
 }
 
-function exibindoMenuAcaoesPokemon() {
+function exibindoMenuAcaoesPokemon() {}
 
+function finalizandoLutaPokemon() {
+    audioVitoria.play();
+    audioVitoria.volume = 0.2;
+    audioLuta.pause();
+    document.getElementById('conteinerResultadoBatalhaPokemon').style.display = 'flex';
 }
 
 function verificarVencedorPokemon() {
     if (document.getElementById('PokemonVidaInimigo').style.width == '0px') {
-        alert('Parabens, você venceu a batalha!');
+        
+        document.getElementById('textoResultadoPokemon').textContent = 'Parabéns, você venceu a batalha!';
+        document.getElementById('SpritPokemonInimigo').style.animation = 'foraCombatepokemon 1s';
+        document.getElementById('SpritPokemonJogador').style.animation = '';
+        setTimeout(() => {document.getElementById('SpritPokemonInimigo').style.display = 'none', finalizandoLutaPokemon();}, 990);
         return true;
     } else if (document.getElementById('PokemonVidaJogador').style.width == '0px') {
-        alert('Infelizmente, você perdeu a batalha!');
+    
+        document.getElementById('textoResultadoPokemon').textContent = 'Infelizmente, você perdeu a batalha!';
+        document.getElementById('SpritPokemonJogador').style.animation = 'foraCombatepokemon 1s';
+        document.getElementById('SpritPokemonInimigo').style.animation = '';
+        setTimeout(() => {document.getElementById('SpritPokemonJogador').style.display = 'none', finalizandoLutaPokemon();}, 990);
         return true;
     } else{
         return false;
@@ -739,6 +770,11 @@ function telaTrocaPokemon() {
     document.getElementById('SpritPokemonJogadorTroca').src = PokemonJogadorInformaçao.sprites.front_default; 
     document.getElementById('PokemonNomeJogadorTroca').textContent = PokemonJogadorInformaçao.name;
     document.getElementById('PokemonVidaJogadorTroca').style.width = document.getElementById('PokemonVidaJogador').style.width;
+    document.getElementById('conteinerBatalhaPokemonTroca').style.display = 'flex';
+}
+
+function cancelarTrocaPokemon() {
+    document.getElementById('conteinerBatalhaPokemonTroca').style.display = 'none';
 }
 
 function salvandoElementos() {
